@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">geekbrains-professional-android-application-development</string>
+    <string name="button_search_confirm">Поиск</string>
+    <string name="query_is_invalid_more_than_one_word">Запрос должен состоять тольо из одного слова</string>
+    <string name="query_is_invalid_more_than_no_word">Запрос не может быть пустым</string>
+    <string name="error_500">Сервер не найден. Проверьте подключение к Интернету</string>
+    <string name="error_404">Слово не найдено</string>
+</resources>
