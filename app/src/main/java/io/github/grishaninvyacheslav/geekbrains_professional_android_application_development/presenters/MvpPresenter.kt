@@ -28,6 +28,8 @@ abstract class MvpPresenter<T : ViewContract> : PresenterContract<T> {
         }
     }
 
+    override fun getAttachedViews() = attachedViews
+
     protected open fun onFirstViewAttach() {}
 
     @CallSuper

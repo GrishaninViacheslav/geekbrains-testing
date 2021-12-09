@@ -44,10 +44,14 @@ class MainActivity : AppCompatActivity(), MainViewContract, BackButtonListener {
         App.instance.navigatorHolder.removeNavigator()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    fun onLocalDestroy() {
         _view = null
         presenter.detach(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        onLocalDestroy()
     }
 
     override fun onBackPressed() {
