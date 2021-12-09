@@ -1,5 +1,7 @@
 package io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.activity
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.github.terrakok.cicerone.androidx.AppNavigator
@@ -19,6 +21,10 @@ class MainActivity : AppCompatActivity(), MainViewContract, BackButtonListener {
     lateinit var presenter: MainPresenter
 
     private val navigator = AppNavigator(this, R.id.container)
+
+    companion object {
+        fun getIntent(context: Context) = Intent(context, MainActivity::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.instance.appComponent.inject(this)
