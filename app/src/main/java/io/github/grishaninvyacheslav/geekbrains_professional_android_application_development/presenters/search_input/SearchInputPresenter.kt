@@ -2,7 +2,6 @@ package io.github.grishaninvyacheslav.geekbrains_professional_android_applicatio
 
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.Screen
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.R
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.MvpPresenter
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.App
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.RouterStub
@@ -40,7 +39,7 @@ class SearchInputPresenter(
         override fun _exit() = this.router.exit()
     }
 ) :
-    MvpPresenter<SearchInputView>() {
+    MvpPresenter<SearchInputViewContract>(), SearchInputPresenterContract {
     private fun validate(query: String) =
         (!query.contains(" ") && query.isNotBlank()).also { isValid ->
             if (!isValid) {
@@ -52,7 +51,7 @@ class SearchInputPresenter(
             }
         }
 
-    fun submitQuery(query: String) {
+    override fun submitQuery(query: String) {
         if (validate(query)) {
             router._navigateTo(Screens.searchResult(query))
         }

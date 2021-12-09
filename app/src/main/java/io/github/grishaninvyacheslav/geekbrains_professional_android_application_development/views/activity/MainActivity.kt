@@ -6,12 +6,12 @@ import com.github.terrakok.cicerone.androidx.AppNavigator
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.R
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.databinding.ActivityMainBinding
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainPresenter
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainView
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainViewContract
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.App
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.BackButtonListener
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), MainView, BackButtonListener {
+class MainActivity : AppCompatActivity(), MainViewContract, BackButtonListener {
     private var _view: ActivityMainBinding? = null
     private val view get() = _view!!
 

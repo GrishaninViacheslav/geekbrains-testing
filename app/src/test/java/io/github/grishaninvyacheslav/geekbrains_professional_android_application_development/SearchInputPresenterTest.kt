@@ -4,7 +4,7 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockito_kotlin.any
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.RouterStub
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.search_input.SearchInputPresenter
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.search_input.SearchInputView
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.search_input.SearchInputViewContract
 import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Rule
@@ -31,7 +31,7 @@ class SearchInputPresenterTest {
     private lateinit var presenter: SearchInputPresenter
 
     @Mock
-    private lateinit var viewMock: SearchInputView
+    private lateinit var viewMock: SearchInputViewContract
 
     @Mock
     private lateinit var routerMock: RouterStub
