@@ -9,6 +9,7 @@ import io.github.grishaninvyacheslav.geekbrains_professional_android_application
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.MvpPresenter
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.ApiHolder
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.App
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.schedulers.ISchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 
@@ -16,7 +17,8 @@ class SearchResultPresenter(
     private var query: String = "",
     private var disposables: CompositeDisposable = CompositeDisposable(),
     private val repository: IDictionaryRepository = DictionaryRepository(ApiHolder.api),
-    private val router: Router = App.instance.router
+    private val router: Router = App.instance.router,
+    private val schedulers: ISchedulers = DefaultSchedulers
 ) :
     MvpPresenter<SearchResultView>() {
     private inner class DefinitionsLoadObserver :
@@ -37,10 +39,9 @@ class SearchResultPresenter(
     }
 
     private fun loadDefinitions() {
+        val getDefinitionsRequest = repository.getDefinitions(query)
         disposables.add(
-            repository
-                .getDefinitions(query)
-                .observeOn(DefaultSchedulers.main())
+            getDefinitionsRequest.observeOn(schedulers.main())
                 .subscribeWith(DefinitionsLoadObserver())
         )
     }
