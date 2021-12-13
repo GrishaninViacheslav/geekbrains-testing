@@ -20,7 +20,7 @@ class SearchResultPresenter(
     private val router: Router = App.instance.router,
     private val schedulers: ISchedulers = DefaultSchedulers
 ) :
-    MvpPresenter<SearchResultView>() {
+    MvpPresenter<SearchResultViewContract>(), SearchResultPresenterContract {
     private inner class DefinitionsLoadObserver :
         DisposableSingleObserver<List<DictionaryWordDto>>() {
         override fun onSuccess(value: List<DictionaryWordDto>) {
@@ -46,7 +46,7 @@ class SearchResultPresenter(
         )
     }
 
-    fun attach(view: SearchResultView, query: String) {
+    fun attach(view: SearchResultViewContract, query: String) {
         this.query = query
         super.attach(view)
     }

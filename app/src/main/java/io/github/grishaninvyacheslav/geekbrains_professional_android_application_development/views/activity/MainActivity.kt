@@ -1,17 +1,19 @@
 package io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.activity
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.R
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.databinding.ActivityMainBinding
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainPresenter
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainView
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainViewContract
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.App
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.BackButtonListener
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), MainView, BackButtonListener {
+class MainActivity : AppCompatActivity(), MainViewContract, BackButtonListener {
     private var _view: ActivityMainBinding? = null
     private val view get() = _view!!
 
@@ -19,6 +21,10 @@ class MainActivity : AppCompatActivity(), MainView, BackButtonListener {
     lateinit var presenter: MainPresenter
 
     private val navigator = AppNavigator(this, R.id.container)
+
+    companion object {
+        fun getIntent(context: Context) = Intent(context, MainActivity::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.instance.appComponent.inject(this)
@@ -38,10 +44,14 @@ class MainActivity : AppCompatActivity(), MainView, BackButtonListener {
         App.instance.navigatorHolder.removeNavigator()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    fun onLocalDestroy() {
         _view = null
         presenter.detach(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        onLocalDestroy()
     }
 
     override fun onBackPressed() {

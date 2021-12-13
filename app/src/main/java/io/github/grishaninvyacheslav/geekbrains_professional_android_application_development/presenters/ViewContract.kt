@@ -1,3 +1,3 @@
 package io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters
 
-interface View
+interface ViewContract

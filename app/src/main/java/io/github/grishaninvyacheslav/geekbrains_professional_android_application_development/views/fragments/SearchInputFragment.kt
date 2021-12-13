@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.App
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.databinding.FragmentSearchInputBinding
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.search_input.SearchInputPresenter
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.search_input.SearchInputView
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.search_input.SearchInputViewContract
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.BackButtonListener
 import javax.inject.Inject
 
-class SearchInputFragment : Fragment(), SearchInputView, BackButtonListener {
+class SearchInputFragment : Fragment(), SearchInputViewContract, BackButtonListener {
     private var _view: FragmentSearchInputBinding? = null
     private val view get() = _view!!
 

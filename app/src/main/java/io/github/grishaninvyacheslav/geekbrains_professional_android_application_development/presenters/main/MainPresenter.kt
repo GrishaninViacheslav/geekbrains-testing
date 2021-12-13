@@ -39,7 +39,7 @@ class MainPresenter(
 
         override fun _exit() = this.router.exit()
     }
-) : MvpPresenter<MainView>() {
+) : MvpPresenter<MainViewContract>(), MainPresenterContract {
     override fun onFirstViewAttach() {
         router._replaceScreen(Screens.searchInput())
     }

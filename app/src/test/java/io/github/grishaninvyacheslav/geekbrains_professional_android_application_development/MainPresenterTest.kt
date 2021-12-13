@@ -4,7 +4,7 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockito_kotlin.any
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.RouterStub
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainPresenter
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainView
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainViewContract
 import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Rule
@@ -30,7 +30,7 @@ class MainPresenterTest {
     private lateinit var presenter: MainPresenter
 
     @Mock
-    private lateinit var viewMock: MainView
+    private lateinit var viewMock: MainViewContract
 
     @Mock
     private lateinit var routerMock: RouterStub

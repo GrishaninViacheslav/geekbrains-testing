@@ -2,7 +2,7 @@ package io.github.grishaninvyacheslav.geekbrains_professional_android_applicatio
 
 import androidx.annotation.CallSuper
 
-abstract class MvpPresenter<T : View> {
+abstract class MvpPresenter<T : ViewContract> : PresenterContract<T> {
     private var isFirstAttach = true
 
     private val attachedViews = arrayListOf<T>()
@@ -13,7 +13,7 @@ abstract class MvpPresenter<T : View> {
         }
     }
 
-    open fun attach(view: T) {
+    override fun attach(view: T) {
         if (isFirstAttach) {
             isFirstAttach = false
             onFirstViewAttach()
@@ -21,12 +21,14 @@ abstract class MvpPresenter<T : View> {
         attachedViews.add(view)
     }
 
-    open fun detach(view: T) {
+    override fun detach(view: T) {
         attachedViews.remove(view)
         if (attachedViews.isEmpty()) {
             onDestroy()
         }
     }
+
+    override fun getAttachedViews() = attachedViews
 
     protected open fun onFirstViewAttach() {}
 
