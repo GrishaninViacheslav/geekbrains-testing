@@ -4,7 +4,9 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.BuildConfig
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.DictionaryRepository
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.DictionaryRepositoryFake
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.IDataSource
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.IDictionaryRepository
 import retrofit2.Retrofit
@@ -30,6 +32,10 @@ class RepositoriesModule {
 
     @Provides
     fun providesDictionaryRepository(api: IDataSource): IDictionaryRepository {
-        return DictionaryRepository(api)
+        return when (BuildConfig.BUILD_TYPE) {
+            "release" -> DictionaryRepository(api)
+            "debug" -> DictionaryRepositoryFake(api)
+            else -> DictionaryRepository(api)
+        }
     }
 }

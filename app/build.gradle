@@ -6,6 +6,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\Saeng\\Desktop\\pre-release\\public-proevent-auth-pre-release\\proevent.jks')
+            storePassword 'password'
+            keyAlias 'keyproevent'
+            keyPassword 'password'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -37,6 +45,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable true
+            signingConfig signingConfigs.debug
+        }
+
+        debug {
+            versionNameSuffix "-debug"
         }
     }
     compileOptions {
