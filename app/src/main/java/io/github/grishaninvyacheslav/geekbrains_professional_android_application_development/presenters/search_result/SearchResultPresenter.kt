@@ -3,11 +3,9 @@ package io.github.grishaninvyacheslav.geekbrains_professional_android_applicatio
 import com.github.terrakok.cicerone.Router
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.R
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.DictionaryWordDto
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.DictionaryRepository
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.IDictionaryRepository
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.schedulers.DefaultSchedulers
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.MvpPresenter
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.ApiHolder
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.App
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.schedulers.ISchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -16,7 +14,7 @@ import io.reactivex.observers.DisposableSingleObserver
 class SearchResultPresenter(
     private var query: String = "",
     private var disposables: CompositeDisposable = CompositeDisposable(),
-    private val repository: IDictionaryRepository = DictionaryRepository(ApiHolder.api),
+    var repository: IDictionaryRepository,
     private val router: Router = App.instance.router,
     private val schedulers: ISchedulers = DefaultSchedulers
 ) :
