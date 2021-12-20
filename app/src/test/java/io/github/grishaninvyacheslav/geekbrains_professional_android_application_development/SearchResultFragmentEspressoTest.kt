@@ -21,21 +21,14 @@ class SearchResultFragmentEspressoTest {
 
     lateinit var scenario: FragmentScenario<SearchResultFragment>
 
-    private val query = "word"
-
     @Before
     fun setup() {
         scenario = launchFragmentInContainer(fragmentArgs = Bundle().apply {
             putString(
                 SearchResultFragment.QUERY_ARG,
-                query
+                VALID_QUERY
             )
         }, themeResId = R.style.Theme_Geekbrainsprofessionalandroidapplicationdevelopment)
-//        {
-        // TODO: почему эта фабрика теряет аргументы?
-        //              https://github.com/android/android-test/issues/442
-//            SearchResultFragment.newInstance("word")
-//        }
     }
 
     @Test
@@ -48,8 +41,8 @@ class SearchResultFragmentEspressoTest {
     @Test
     fun wordView_IsWorking() {
         Espresso.onView(ViewMatchers.withId(R.id.word))
-            .check(ViewAssertions.matches(ViewMatchers.withText(query)))
+            .check(ViewAssertions.matches(ViewMatchers.withText(VALID_QUERY)))
         Espresso.onView(ViewMatchers.withId(R.id.phonetic))
-            .check(ViewAssertions.matches(ViewMatchers.withText("[$query]")))
+            .check(ViewAssertions.matches(ViewMatchers.withText("[$VALID_QUERY]")))
     }
 }

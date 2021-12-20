@@ -19,17 +19,17 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class SearchInputPresenterTest {
     private fun submitValidQuery(routerMockInvocationNumber: Int) {
-        presenter.submitQuery("word")
+        presenter.submitQuery(VALID_QUERY)
         Mockito.verify(routerMock, Mockito.times(routerMockInvocationNumber))._navigateTo(any(), any())
     }
 
     private fun submitMoreThenOneWordQuery(viewMockInvocationNumber: Int) {
-        presenter.submitQuery("word and another word")
+        presenter.submitQuery(MORE_THEN_ONE_WORD_QUERY)
         Mockito.verify(viewMock, Mockito.times(viewMockInvocationNumber)).showMessage(anyString())
     }
 
     private fun submitEmptyQuery(viewMockInvocationNumber: Int) {
-        presenter.submitQuery("")
+        presenter.submitQuery(EMPTY_QUERY)
         Mockito.verify(viewMock, Mockito.times(viewMockInvocationNumber)).showMessage(anyString())
     }
 
@@ -59,7 +59,6 @@ class SearchInputPresenterTest {
         )
     }
 
-    // Решение задания 2 - покрытие тестами презентера
     @Test
     fun submitValidQuery_Test() {
         presenter.attach(viewMock)
@@ -68,7 +67,6 @@ class SearchInputPresenterTest {
         presenter.detach(viewMock)
     }
 
-    // Решение задания 2 - покрытие тестами презентера
     @Test
     fun submitQueryMoreThenOneWordError_Test() {
         presenter.attach(viewMock)
@@ -77,7 +75,6 @@ class SearchInputPresenterTest {
         presenter.detach(viewMock)
     }
 
-    // Решение задания 2 - покрытие тестами презентера
     @Test
     fun submitQueryEmptyError_Test() {
         presenter.attach(viewMock)
@@ -87,7 +84,6 @@ class SearchInputPresenterTest {
     }
 
     @Test
-    // Решение задания 2 - покрытие тестами презентера
     fun submitQueries_Test() {
         presenter.attach(viewMock)
         submitMoreThenOneWordQuery(1)
