@@ -33,13 +33,6 @@ class SearchInputFragmentEspressoTest {
         }
     }
 
-
-    // TODO: не разобрался как получить состояние фрагмента при использовании FragmentScenario
-//    @Test
-//    fun fragment_IsResumed() {
-//        TestCase.assertEquals(Lifecycle.State.RESUMED, scenario.state)
-//    }
-
     @Test
     fun fragmentBasicViews_IsCompletelyDisplayed() {
         onView(withId(R.id.search_input)).check(matches(isCompletelyDisplayed()))
@@ -49,14 +42,14 @@ class SearchInputFragmentEspressoTest {
     @Test
     fun emptyQueryErrorMessageView_IsWorking() {
         onView(withId(R.id.search_confirm)).perform(click())
-        onView(withId(R.id.error_message)).check(matches(withText("Запрос не может быть пустым")))
+        onView(withId(R.id.error_message)).check(matches(withText(EMPTY_QUERY_ERROR_MESSAGE)))
     }
 
     @Test
     fun moreThenOneWordQueryErrorMessageView_IsWorking() {
         onView(withId(R.id.search_input)).perform(click())
-        onView(withId(R.id.search_input)).perform(replaceText("more then one word"), closeSoftKeyboard())
+        onView(withId(R.id.search_input)).perform(replaceText(MORE_THEN_ONE_WORD_QUERY), closeSoftKeyboard())
         onView(withId(R.id.search_confirm)).perform(click())
-        onView(withId(R.id.error_message)).check(matches(withText("Запрос должен состоять тольо из одного слова")))
+        onView(withId(R.id.error_message)).check(matches(withText(MORE_THEN_ONE_WORD_QUERY_ERROR_MESSAGE)))
     }
 }

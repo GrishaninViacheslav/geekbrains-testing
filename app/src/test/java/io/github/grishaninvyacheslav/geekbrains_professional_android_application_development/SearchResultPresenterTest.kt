@@ -62,7 +62,6 @@ class SearchResultPresenterTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         val cicerone = Cicerone.create()
-        val navigatorHolder = cicerone.getNavigatorHolder()
         val router = cicerone.router
         presenter = SearchResultPresenter(
             repository = repositoryFake,
@@ -75,16 +74,6 @@ class SearchResultPresenterTest {
         val searchQuery = "word"
         presenter.attach(viewMock, searchQuery)
         Mockito.verify(repositoryMock, Mockito.times(1)).getDefinitions(searchQuery)
-        // TODO: не разобрался почему не проходят закомментированные тесты. Скорее всего это связанно с асинхронным исполнением, но я не понял как это сделать парвильно
-        // Mockito.verify(viewMock, Mockito.times(1)).setTitle("$searchQuery", "[$searchQuery phonetic]")
         presenter.detach(viewMock)
     }
-
-//    @Test
-//    fun getDefinitionsError_Test() {
-//        val searchQuery = "nonexistingword"
-//        presenter.attach(viewMock, searchQuery)
-//        Mockito.verify(viewMock, Mockito.times(1)).showErrorMessage("Слово не найдено")
-//        presenter.detach(viewMock)
-//    }
 }
