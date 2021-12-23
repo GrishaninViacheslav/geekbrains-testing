@@ -17,11 +17,14 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.withDecorView
+import junit.framework.TestCase
 import org.hamcrest.Matchers.not
 
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
+
+// Решение задания 1 - протестировать фрагмент
 class SearchHistoryFragmentEspressoTest {
 
     lateinit var scenario: FragmentScenario<SearchHistoryFragment>
@@ -32,6 +35,13 @@ class SearchHistoryFragmentEspressoTest {
             themeResId = R.style.Theme_Geekbrainsprofessionalandroidapplicationdevelopment,
             initialState = Lifecycle.State.RESUMED
         )
+    }
+
+    @Test
+    fun fragment_AssertNotNull() {
+        scenario.onFragment() {
+            TestCase.assertNotNull(it)
+        }
     }
 
     @Test
