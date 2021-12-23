@@ -2,6 +2,7 @@ package io.github.grishaninvyacheslav.geekbrains_professional_android_applicatio
 
 import dagger.Component
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.activity.MainActivity
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.fragments.SearchHistoryFragment
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.fragments.SearchInputFragment
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.fragments.SearchResultFragment
 import javax.inject.Singleton
@@ -19,4 +20,5 @@ interface AppComponent {
 
     fun inject(searchInputFragment: SearchInputFragment)
     fun inject(searchResultFragment: SearchResultFragment)
+    fun inject(searchHistoryFragment: SearchHistoryFragment)
 }

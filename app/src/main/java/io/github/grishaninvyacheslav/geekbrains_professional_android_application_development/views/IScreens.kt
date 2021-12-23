@@ -5,4 +5,5 @@ import com.github.terrakok.cicerone.Screen
 interface IScreens {
     fun searchInput(): Screen
     fun searchResult(searchQuery: String): Screen
+    fun searchHistory(): Screen
 }

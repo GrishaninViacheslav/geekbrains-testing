@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.IDictionaryRepository
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainPresenter
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.search_history.SearchHistoryPresenter
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.search_input.SearchInputPresenter
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.search_result.SearchResultPresenter
 
@@ -23,4 +24,10 @@ class PresentersModule {
     fun providesSearchResultPresenter(repository: IDictionaryRepository): SearchResultPresenter {
         return SearchResultPresenter(repository = repository)
     }
+
+    @Provides
+    fun providesSearchHistoryPresenter(): SearchHistoryPresenter {
+        return SearchHistoryPresenter()
+    }
+
 }
