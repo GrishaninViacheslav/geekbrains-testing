@@ -57,6 +57,10 @@ class SearchInputPresenter(
         }
     }
 
+    override fun openHistory(){
+        router._navigateTo(Screens.searchHistory())
+    }
+
     fun backPressed(): Boolean {
         router._exit()
         return true

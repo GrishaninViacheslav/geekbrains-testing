@@ -35,6 +35,9 @@ class SearchInputFragment : Fragment(), SearchInputViewContract, BackButtonListe
             searchConfirm.setOnClickListener {
                 presenter.submitQuery(searchInput.text.toString())
             }
+            toHistory.setOnClickListener {
+                presenter.openHistory()
+            }
         }
     }
 

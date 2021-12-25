@@ -17,6 +17,7 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
+// Решение задания 1 - протестировать фрагмент
 class SearchInputFragmentEspressoTest {
 
     lateinit var scenario: FragmentScenario<SearchInputFragment>
