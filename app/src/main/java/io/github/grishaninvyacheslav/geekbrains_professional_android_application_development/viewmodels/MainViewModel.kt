@@ -1,14 +1,13 @@
-package io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main
+package io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels
 
+import androidx.lifecycle.ViewModel
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.Screen
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.App
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.MvpPresenter
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.RouterStub
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.Screens
 
-class MainPresenter(
-    // TODO: выглядет очень странно, есть ли более удобный способ мокать Router?
+class MainViewModel(
     private val router: RouterStub = object : RouterStub {
         private val router: Router = App.instance.router
 
@@ -39,12 +38,30 @@ class MainPresenter(
 
         override fun _exit() = this.router.exit()
     }
-) : MvpPresenter<MainViewContract>(), MainPresenterContract {
-    override fun onFirstViewAttach() {
+) : ViewModel() {
+    var isInitWasCalledFromTheLastTime = false
+        private set
+        get() {
+            val lastTimeValue = field
+            field = false
+            return lastTimeValue
+        }
+
+    fun init() {
+        isInitWasCalledFromTheLastTime = true
         router._replaceScreen(Screens.searchInput())
     }
 
+    var isBackPressedWasCalledFromTheLastTime = false
+        private set
+        get() {
+            val lastTimeValue = field
+            field = false
+            return lastTimeValue
+        }
+
     fun backPressed(): Boolean {
+        isBackPressedWasCalledFromTheLastTime = true
         router._exit()
         return true
     }

@@ -9,6 +9,9 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.fragments.SearchResultFragment
+import junit.framework.Assert
+import junit.framework.Assert.assertNotNull
+import junit.framework.Assert.assertTrue
 import junit.framework.TestCase
 import org.junit.Before
 import org.junit.Test
@@ -17,7 +20,6 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
-// Решение задания 1 - протестировать фрагмент
 class SearchResultFragmentEspressoTest {
 
     lateinit var scenario: FragmentScenario<SearchResultFragment>
@@ -36,6 +38,38 @@ class SearchResultFragmentEspressoTest {
     fun fragment_AssertNotNull() {
         scenario.onFragment() {
             TestCase.assertNotNull(it)
+        }
+    }
+
+    @Test
+    fun isViewModelLoadsDefinitions(){
+        scenario.onFragment { fragment ->
+            with(fragment.viewModel) {
+                assertNotNull(this)
+                assertTrue(isLoadDefinitionsWasCalledFromTheLastTime)
+            }
+        }
+    }
+
+    @Test
+    fun isViewModelDisposesResources(){
+        scenario.onFragment { fragment ->
+            with(fragment.viewModel) {
+                assertNotNull(this)
+                fragment.onDestroy()
+                assertTrue(isDisposeResourcesWasCalledFromTheLastTime)
+            }
+        }
+    }
+
+    @Test
+    fun isViewModelBackPresses(){
+        scenario.onFragment { fragment ->
+            with(fragment.viewModel) {
+                assertNotNull(this)
+                fragment.backPressed()
+                assertTrue(isBackPressedWasCalledFromTheLastTime)
+            }
         }
     }
 

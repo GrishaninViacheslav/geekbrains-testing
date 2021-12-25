@@ -9,6 +9,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.fragments.SearchInputFragment
+import junit.framework.Assert.assertNotNull
+import junit.framework.Assert.assertTrue
 import junit.framework.TestCase
 import org.junit.Before
 import org.junit.Test
@@ -17,7 +19,6 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
-// Решение задания 1 - протестировать фрагмент
 class SearchInputFragmentEspressoTest {
 
     lateinit var scenario: FragmentScenario<SearchInputFragment>
@@ -52,5 +53,38 @@ class SearchInputFragmentEspressoTest {
         onView(withId(R.id.search_input)).perform(replaceText(MORE_THEN_ONE_WORD_QUERY), closeSoftKeyboard())
         onView(withId(R.id.search_confirm)).perform(click())
         onView(withId(R.id.error_message)).check(matches(withText(MORE_THEN_ONE_WORD_QUERY_ERROR_MESSAGE)))
+    }
+
+    @Test
+    fun isQuerySubmits(){
+        scenario.onFragment { fragment ->
+            with(fragment.viewModel) {
+                assertNotNull(this)
+                onView(withId(R.id.search_confirm)).perform(click())
+                assertTrue(isSubmitQueryWasCalledFromTheLastTime)
+            }
+        }
+    }
+
+    @Test
+    fun isHistoryOpens(){
+        scenario.onFragment { fragment ->
+            with(fragment.viewModel) {
+                assertNotNull(this)
+                onView(withId(R.id.to_history)).perform(click())
+                assertTrue(isOpenHistoryWasCalledFromTheLastTime)
+            }
+        }
+    }
+
+    @Test
+    fun isBackPressCalls(){
+        scenario.onFragment { fragment ->
+            with(fragment.viewModel) {
+                assertNotNull(this)
+                fragment.backPressed()
+                assertTrue(isBackPressedWasCalledFromTheLastTime)
+            }
+        }
     }
 }

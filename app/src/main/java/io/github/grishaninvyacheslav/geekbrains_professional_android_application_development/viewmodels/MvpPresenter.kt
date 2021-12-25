@@ -1,4 +1,4 @@
-package io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters
+package io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels
 
 import androidx.annotation.CallSuper
 
