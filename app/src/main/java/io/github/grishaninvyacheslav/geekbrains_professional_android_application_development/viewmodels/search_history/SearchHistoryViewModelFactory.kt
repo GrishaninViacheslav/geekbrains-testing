@@ -15,8 +15,7 @@ class SearchHistoryViewModelFactory(var repository: ISearchHistoryRepository) :
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return modelClass.getConstructor(
             ISearchHistoryRepository::class.java,
-            RouterStub::class.java,
-            ISchedulers::class.java
+            RouterStub::class.java
         )
             .newInstance(
                 repository,
@@ -56,8 +55,7 @@ class SearchHistoryViewModelFactory(var repository: ISearchHistoryRepository) :
                     override fun finishChain() = this.router.finishChain()
 
                     override fun exit() = this.router.exit()
-                },
-                DefaultSchedulers
+                }
             )
     }
 }

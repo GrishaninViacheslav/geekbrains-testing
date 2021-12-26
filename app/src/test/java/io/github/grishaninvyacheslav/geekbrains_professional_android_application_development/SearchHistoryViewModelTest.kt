@@ -3,7 +3,6 @@ package io.github.grishaninvyacheslav.geekbrains_professional_android_applicatio
 import android.os.Build
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.RouterStub
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.ISearchHistoryRepository
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.schedulers.StubSchedulers
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.search_history.SearchHistoryViewModel
 import io.reactivex.Single
 import org.junit.Assert
@@ -18,12 +17,17 @@ import org.mockito.junit.MockitoJUnitRunner
 import org.robolectric.annotation.Config
 import androidx.lifecycle.Observer
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.search_history.HistoryScreenState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @RunWith(MockitoJUnitRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
+@ExperimentalCoroutinesApi
 class SearchHistoryViewModelTest {
     @get:Rule
     var instantExecutorRule = androidx.arch.core.executor.testing.InstantTaskExecutorRule()
+
+    @get:Rule
+    var testCoroutineRule = TestCoroutineRule()
 
     private lateinit var viewModel: SearchHistoryViewModel
 
@@ -39,28 +43,27 @@ class SearchHistoryViewModelTest {
         viewModel = SearchHistoryViewModel(
             repository = repositoryMock,
             router = routerMock,
-            schedulers = StubSchedulers
         )
     }
 
     @Test
-    fun loadSearchHistory_Test() {
-        val observer = Observer<HistoryScreenState> {}
-        val liveResult = viewModel.getLiveHistory()
-        Mockito.`when`(repositoryMock.getHistory()).thenReturn(
-            Single.just(
+    fun coroutines_loadSearchHistory_Test() {
+        testCoroutineRule.runBlockingTest {
+            val observer = Observer<HistoryScreenState> {}
+            val liveResult = viewModel.getLiveHistory()
+            Mockito.`when`(repositoryMock.getHistory()).thenReturn(
                 List(20) { index ->
                     "[ITEM_${index + 1}]"
                 }
             )
-        )
 
-        try {
-            liveResult.observeForever(observer)
-            viewModel.loadSearchHistory()
-            Assert.assertNotNull(liveResult.value)
-        } finally {
-            liveResult.removeObserver(observer)
+            try {
+                liveResult.observeForever(observer)
+                viewModel.loadSearchHistory()
+                Assert.assertNotNull(liveResult.value)
+            } finally {
+                liveResult.removeObserver(observer)
+            }
         }
     }
 }
