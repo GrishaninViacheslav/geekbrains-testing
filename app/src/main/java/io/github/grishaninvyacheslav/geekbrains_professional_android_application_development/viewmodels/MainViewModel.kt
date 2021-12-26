@@ -11,32 +11,32 @@ class MainViewModel(
     private val router: RouterStub = object : RouterStub {
         private val router: Router = App.instance.router
 
-        override fun _navigateTo(screen: Screen, clearContainer: Boolean) =
+        override fun navigateTo(screen: Screen, clearContainer: Boolean) =
             this.router.navigateTo(screen, clearContainer)
 
-        override fun _newRootScreen(screen: Screen) =
+        override fun newRootScreen(screen: Screen) =
             this.router.newRootScreen(screen)
 
-        override fun _replaceScreen(screen: Screen) =
+        override fun replaceScreen(screen: Screen) =
             this.router.replaceScreen(screen)
 
-        override fun _backTo(screen: Screen?) =
+        override fun backTo(screen: Screen?) =
             this.router.backTo(screen)
 
 
-        override fun _newChain(vararg screens: Screen, showOnlyTopScreenView: Boolean) =
+        override fun newChain(vararg screens: Screen, showOnlyTopScreenView: Boolean) =
             this.router.newChain(screens = screens, showOnlyTopScreenView = showOnlyTopScreenView)
 
 
-        override fun _newRootChain(vararg screens: Screen, showOnlyTopScreenView: Boolean) =
+        override fun newRootChain(vararg screens: Screen, showOnlyTopScreenView: Boolean) =
             this.router.newRootChain(
                 screens = screens,
                 showOnlyTopScreenView = showOnlyTopScreenView
             )
 
-        override fun _finishChain() = this.router.finishChain()
+        override fun finishChain() = this.router.finishChain()
 
-        override fun _exit() = this.router.exit()
+        override fun exit() = this.router.exit()
     }
 ) : ViewModel() {
     var isInitWasCalledFromTheLastTime = false
@@ -49,7 +49,7 @@ class MainViewModel(
 
     fun init() {
         isInitWasCalledFromTheLastTime = true
-        router._replaceScreen(Screens.searchInput())
+        router.replaceScreen(Screens.searchInput())
     }
 
     var isBackPressedWasCalledFromTheLastTime = false
@@ -62,7 +62,7 @@ class MainViewModel(
 
     fun backPressed(): Boolean {
         isBackPressedWasCalledFromTheLastTime = true
-        router._exit()
+        router.exit()
         return true
     }
 }

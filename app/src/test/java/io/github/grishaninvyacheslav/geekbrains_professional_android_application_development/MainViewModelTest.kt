@@ -42,6 +42,6 @@ class MainViewModelTest {
     @Test
     fun init_Test() {
         viewModel.init()
-        Mockito.verify(routerMock, Mockito.times(1))._replaceScreen(any())
+        Mockito.verify(routerMock, Mockito.times(1)).replaceScreen(any())
     }
 }

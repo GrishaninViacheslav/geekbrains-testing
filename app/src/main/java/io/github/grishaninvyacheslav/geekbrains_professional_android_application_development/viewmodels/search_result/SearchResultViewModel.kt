@@ -3,11 +3,9 @@ package io.github.grishaninvyacheslav.geekbrains_professional_android_applicatio
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.terrakok.cicerone.Router
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.R
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.DictionaryWordDto
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.IDictionaryRepository
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.schedulers.DefaultSchedulers
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.App
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.RouterStub
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.schedulers.ISchedulers
@@ -15,11 +13,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 
 class SearchResultViewModel(
-    var repository: IDictionaryRepository,
-    private val router: RouterStub
+    private var repository: IDictionaryRepository,
+    private val router: RouterStub,
+    private val schedulers: ISchedulers
 ) : ViewModel() {
     private var disposables: CompositeDisposable = CompositeDisposable()
-    private val schedulers: ISchedulers = DefaultSchedulers
 
     private val _liveData = MutableLiveData<ResultScreenState>()
     private val liveData: LiveData<ResultScreenState> = _liveData
@@ -83,7 +81,7 @@ class SearchResultViewModel(
 
     fun backPressed(): Boolean {
         isBackPressedWasCalledFromTheLastTime = true
-        router._exit()
+        router.exit()
         return true
     }
 }

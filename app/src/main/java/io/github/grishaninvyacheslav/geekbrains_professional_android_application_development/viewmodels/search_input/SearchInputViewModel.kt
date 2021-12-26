@@ -13,32 +13,32 @@ class SearchInputViewModel(
     private val router: RouterStub = object : RouterStub {
         private val router: Router = App.instance.router
 
-        override fun _navigateTo(screen: Screen, clearContainer: Boolean) =
+        override fun navigateTo(screen: Screen, clearContainer: Boolean) =
             this.router.navigateTo(screen, clearContainer)
 
-        override fun _newRootScreen(screen: Screen) =
+        override fun newRootScreen(screen: Screen) =
             this.router.newRootScreen(screen)
 
-        override fun _replaceScreen(screen: Screen) =
+        override fun replaceScreen(screen: Screen) =
             this.router.replaceScreen(screen)
 
-        override fun _backTo(screen: Screen?) =
+        override fun backTo(screen: Screen?) =
             this.router.backTo(screen)
 
 
-        override fun _newChain(vararg screens: Screen, showOnlyTopScreenView: Boolean) =
+        override fun newChain(vararg screens: Screen, showOnlyTopScreenView: Boolean) =
             this.router.newChain(screens = screens, showOnlyTopScreenView = showOnlyTopScreenView)
 
 
-        override fun _newRootChain(vararg screens: Screen, showOnlyTopScreenView: Boolean) =
+        override fun newRootChain(vararg screens: Screen, showOnlyTopScreenView: Boolean) =
             this.router.newRootChain(
                 screens = screens,
                 showOnlyTopScreenView = showOnlyTopScreenView
             )
 
-        override fun _finishChain() = this.router.finishChain()
+        override fun finishChain() = this.router.finishChain()
 
-        override fun _exit() = this.router.exit()
+        override fun exit() = this.router.exit()
     }
 ) : ViewModel() {
     private val _liveData = MutableLiveData<InputScreenState>()
@@ -69,7 +69,7 @@ class SearchInputViewModel(
         isSubmitQueryWasCalledFromTheLastTime = true
         if (validate(query)) {
             _liveData.value = InputScreenState.Success
-            router._navigateTo(Screens.searchResult(query))
+            router.navigateTo(Screens.searchResult(query))
         }
     }
 
@@ -83,7 +83,7 @@ class SearchInputViewModel(
 
     fun openHistory() {
         isOpenHistoryWasCalledFromTheLastTime = true
-        router._navigateTo(Screens.searchHistory())
+        router.navigateTo(Screens.searchHistory())
     }
 
     var isBackPressedWasCalledFromTheLastTime = false
@@ -96,7 +96,7 @@ class SearchInputViewModel(
 
     fun backPressed(): Boolean {
         isBackPressedWasCalledFromTheLastTime = true
-        router._exit()
+        router.exit()
         return true
     }
 }

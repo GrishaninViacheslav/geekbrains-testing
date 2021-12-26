@@ -9,7 +9,6 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.fragments.SearchResultFragment
-import junit.framework.Assert
 import junit.framework.Assert.assertNotNull
 import junit.framework.Assert.assertTrue
 import junit.framework.TestCase

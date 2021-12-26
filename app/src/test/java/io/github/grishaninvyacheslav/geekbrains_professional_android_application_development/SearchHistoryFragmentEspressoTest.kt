@@ -19,7 +19,6 @@ import junit.framework.Assert.assertNotNull
 import junit.framework.Assert.assertTrue
 import junit.framework.TestCase
 
-
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
 class SearchHistoryFragmentEspressoTest {

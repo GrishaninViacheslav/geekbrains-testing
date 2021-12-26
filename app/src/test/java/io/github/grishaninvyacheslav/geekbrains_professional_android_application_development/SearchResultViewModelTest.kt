@@ -1,55 +1,31 @@
 package io.github.grishaninvyacheslav.geekbrains_professional_android_application_development
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
+import android.os.Build
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.IDictionaryRepository
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.search_result.SearchResultViewModel
-import org.junit.Before
-import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.RouterStub
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.DefinitionDto
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.DictionaryWordDto
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.MeaningsDto
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.search_result.ResultScreenState
 import io.reactivex.Single
-import org.junit.ClassRule
+import androidx.lifecycle.Observer
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.schedulers.StubSchedulers
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import org.junit.Rule
+import org.mockito.Mockito
+import org.robolectric.annotation.Config
+import org.junit.*
 
 @RunWith(MockitoJUnitRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 class SearchResultViewModelTest {
-    companion object {
-        @ClassRule
-        @JvmField
-        val schedulers = RxImmediateSchedulerRule()
-    }
-
-    @Rule
-    @JvmField
-    val rule = InstantTaskExecutorRule()
+    @get:Rule
+    var instantExecutorRule = androidx.arch.core.executor.testing.InstantTaskExecutorRule()
 
     private lateinit var viewModel: SearchResultViewModel
-
-    private var repositoryFake: IDictionaryRepository = object : IDictionaryRepository {
-        override fun getDefinitions(word: String): Single<List<DictionaryWordDto>> {
-            repositoryMock.getDefinitions(word)
-            return Single.just(
-                listOf(
-                    DictionaryWordDto(
-                        word, "[$word phonetic]", listOf(
-                            MeaningsDto(
-                                "$word partOfSpeech", listOf(
-                                    DefinitionDto("$word definition", "$word example")
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        }
-    }
 
     @Mock
     private lateinit var routerMock: RouterStub
@@ -61,15 +37,38 @@ class SearchResultViewModelTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         viewModel = SearchResultViewModel(
-            repository = repositoryFake,
-            router = routerMock
+            repository = repositoryMock,
+            router = routerMock,
+            schedulers = StubSchedulers
         )
     }
 
-//    @Test
-//    fun getDefinitions_Test() {
-//        val searchQuery = "word"
-//        viewModel.loadDefinitions(searchQuery)
-//        Mockito.verify(repositoryMock, Mockito.times(1)).getDefinitions(searchQuery)
-//    }
+    @Test
+    fun getDefinitions_Test() {
+        val observer = Observer<ResultScreenState> {}
+        val liveResult = viewModel.getLiveResult()
+        Mockito.`when`(repositoryMock.getDefinitions(VALID_QUERY)).thenReturn(
+            Single.just(
+                listOf(
+                    DictionaryWordDto(
+                        VALID_QUERY, "[$VALID_QUERY phonetic]", listOf(
+                            MeaningsDto(
+                                "$VALID_QUERY partOfSpeech", listOf(
+                                    DefinitionDto("$VALID_QUERY definition", "$VALID_QUERY example")
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+        try {
+            liveResult.observeForever(observer)
+            viewModel.loadDefinitions(VALID_QUERY)
+            Assert.assertNotNull(liveResult.value)
+        } finally {
+            liveResult.removeObserver(observer)
+        }
+    }
 }

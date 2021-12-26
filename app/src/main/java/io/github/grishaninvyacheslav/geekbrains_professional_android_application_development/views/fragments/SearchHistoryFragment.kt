@@ -6,14 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.App
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.databinding.FragmentSearchHistoryBinding
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.search_history.HistoryRVAdapter
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.search_history.HistoryScreenState
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.search_history.SearchHistoryViewModel
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.search_history.SearchHistoryViewModelFactory
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.BackButtonListener
+import javax.inject.Inject
 
 class SearchHistoryFragment : Fragment(), BackButtonListener {
     private var _view: FragmentSearchHistoryBinding? = null
@@ -25,7 +27,13 @@ class SearchHistoryFragment : Fragment(), BackButtonListener {
 
     var adapter: HistoryRVAdapter? = null
 
-    val viewModel: SearchHistoryViewModel by viewModels()
+    @Inject
+    lateinit var viewModelFactory: SearchHistoryViewModelFactory
+
+    val viewModel: SearchHistoryViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)
+            .get(SearchHistoryViewModel::class.java)
+    }
 
     companion object {
         @JvmStatic

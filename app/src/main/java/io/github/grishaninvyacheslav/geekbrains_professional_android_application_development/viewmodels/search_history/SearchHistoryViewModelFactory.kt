@@ -1,4 +1,4 @@
-package io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.search_result
+package io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.search_history
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -6,15 +6,15 @@ import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.Screen
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.App
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.RouterStub
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.IDictionaryRepository
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.ISearchHistoryRepository
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.schedulers.DefaultSchedulers
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.schedulers.ISchedulers
 
-class SearchResultViewModelFactory(var repository: IDictionaryRepository) :
+class SearchHistoryViewModelFactory(var repository: ISearchHistoryRepository) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return modelClass.getConstructor(
-            IDictionaryRepository::class.java,
+            ISearchHistoryRepository::class.java,
             RouterStub::class.java,
             ISchedulers::class.java
         )
