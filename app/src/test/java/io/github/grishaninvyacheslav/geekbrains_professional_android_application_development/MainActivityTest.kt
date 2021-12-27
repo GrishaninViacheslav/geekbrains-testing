@@ -8,8 +8,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.PresenterContract
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.ViewContract
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.activity.MainActivity
 import junit.framework.Assert.*
 import org.junit.After
@@ -21,22 +19,9 @@ import org.robolectric.annotation.Config
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
 class MainActivityTest {
-
     private lateinit var scenario: ActivityScenario<MainActivity>
 
     private lateinit var context: Context
-
-    private fun <T : ViewContract> isPresenterAttached(
-        activity: ViewContract,
-        presenter: PresenterContract<T>
-    ): Boolean {
-        for (view in presenter.getAttachedViews()) {
-            if (view === activity) {
-                return true
-            }
-        }
-        return false
-    }
 
     @Before
     fun setup() {
@@ -79,21 +64,22 @@ class MainActivityTest {
     }
 
     @Test
-    fun isPresenterAttaches() {
+    fun isViewModelInitializes() {
         scenario.onActivity { activity ->
-            with(activity.presenter) {
+            with(activity.viewModel) {
                 assertNotNull(this)
-                assertTrue(isPresenterAttached(activity, this))
+                assertTrue(isInitWasCalledFromTheLastTime)
             }
         }
     }
 
     @Test
-    fun isPresenterDetaches() {
+    fun isViewModelBackPressedCalls() {
         scenario.onActivity { activity ->
-            with(activity.presenter) {
-                activity.onLocalDestroy()
-                assertTrue(!isPresenterAttached(activity, this))
+            with(activity.viewModel) {
+                assertNotNull(this)
+                activity.backPressed()
+                assertTrue(isBackPressedWasCalledFromTheLastTime)
             }
         }
     }

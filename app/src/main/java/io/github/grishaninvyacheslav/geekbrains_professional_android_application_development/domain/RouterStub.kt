@@ -3,12 +3,12 @@ package io.github.grishaninvyacheslav.geekbrains_professional_android_applicatio
 import com.github.terrakok.cicerone.Screen
 
 interface RouterStub {
-    fun _navigateTo(screen: Screen, clearContainer: Boolean = true)
-    fun _newRootScreen(screen: Screen)
-    fun _replaceScreen(screen: Screen)
-    fun _backTo(screen: Screen?)
-    fun _newChain(vararg screens: Screen, showOnlyTopScreenView: Boolean = true)
-    fun _newRootChain(vararg screens: Screen, showOnlyTopScreenView: Boolean = true)
-    fun _finishChain()
-    fun _exit()
+    fun navigateTo(screen: Screen, clearContainer: Boolean = true)
+    fun newRootScreen(screen: Screen)
+    fun replaceScreen(screen: Screen)
+    fun backTo(screen: Screen?)
+    fun newChain(vararg screens: Screen, showOnlyTopScreenView: Boolean = true)
+    fun newRootChain(vararg screens: Screen, showOnlyTopScreenView: Boolean = true)
+    fun finishChain()
+    fun exit()
 }

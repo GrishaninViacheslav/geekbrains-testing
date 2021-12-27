@@ -4,21 +4,19 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.R
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.databinding.ActivityMainBinding
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainPresenter
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainViewContract
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.MainViewModel
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.App
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.BackButtonListener
-import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), MainViewContract, BackButtonListener {
+class MainActivity : AppCompatActivity(), BackButtonListener {
     private var _view: ActivityMainBinding? = null
     private val view get() = _view!!
 
-    @Inject
-    lateinit var presenter: MainPresenter
+    val viewModel: MainViewModel by viewModels()
 
     private val navigator = AppNavigator(this, R.id.container)
 
@@ -28,10 +26,14 @@ class MainActivity : AppCompatActivity(), MainViewContract, BackButtonListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.instance.appComponent.inject(this)
-        presenter.attach(this)
         super.onCreate(savedInstanceState)
         _view = ActivityMainBinding.inflate(layoutInflater)
         setContentView(view.root)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.init()
     }
 
     override fun onResumeFragments() {
@@ -46,7 +48,6 @@ class MainActivity : AppCompatActivity(), MainViewContract, BackButtonListener {
 
     fun onLocalDestroy() {
         _view = null
-        presenter.detach(this)
     }
 
     override fun onDestroy() {
@@ -62,5 +63,5 @@ class MainActivity : AppCompatActivity(), MainViewContract, BackButtonListener {
         }
     }
 
-    override fun backPressed() = presenter.backPressed()
+    override fun backPressed() = viewModel.backPressed()
 }

@@ -1,4 +1,4 @@
-package io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.search_history
+package io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.search_history
 
 import android.view.LayoutInflater
 import android.view.View

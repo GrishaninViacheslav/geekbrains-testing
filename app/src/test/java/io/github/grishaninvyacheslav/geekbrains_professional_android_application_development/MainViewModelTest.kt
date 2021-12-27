@@ -3,8 +3,7 @@ package io.github.grishaninvyacheslav.geekbrains_professional_android_applicatio
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockito_kotlin.any
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.RouterStub
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainPresenter
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.presenters.main.MainViewContract
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.viewmodels.MainViewModel
 import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Rule
@@ -16,7 +15,7 @@ import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class MainPresenterTest {
+class MainViewModelTest {
     companion object {
         @ClassRule
         @JvmField
@@ -27,10 +26,7 @@ class MainPresenterTest {
     @JvmField
     val rule = InstantTaskExecutorRule()
 
-    private lateinit var presenter: MainPresenter
-
-    @Mock
-    private lateinit var viewMock: MainViewContract
+    private lateinit var viewModel: MainViewModel
 
     @Mock
     private lateinit var routerMock: RouterStub
@@ -38,15 +34,14 @@ class MainPresenterTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        presenter = MainPresenter(
+        viewModel = MainViewModel(
             router = routerMock
         )
     }
 
     @Test
     fun init_Test() {
-        presenter.attach(viewMock)
-        Mockito.verify(routerMock, Mockito.times(1))._replaceScreen(any())
-        presenter.detach(viewMock)
+        viewModel.init()
+        Mockito.verify(routerMock, Mockito.times(1)).replaceScreen(any())
     }
 }

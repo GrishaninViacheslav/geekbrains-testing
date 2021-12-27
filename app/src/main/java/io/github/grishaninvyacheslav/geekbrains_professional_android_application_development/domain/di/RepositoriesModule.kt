@@ -5,10 +5,7 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.BuildConfig
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.DictionaryRepository
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.DictionaryRepositoryFake
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.IDataSource
-import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.IDictionaryRepository
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.models.repository.*
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -37,5 +34,10 @@ class RepositoriesModule {
             "debug" -> DictionaryRepositoryFake(api)
             else -> DictionaryRepository(api)
         }
+    }
+
+    @Provides
+    fun providesSearchHistoryRepository(): ISearchHistoryRepository {
+        return SearchHistoryRepositoryFake()
     }
 }
