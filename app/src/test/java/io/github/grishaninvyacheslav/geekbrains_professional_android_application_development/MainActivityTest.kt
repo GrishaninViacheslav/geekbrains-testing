@@ -32,12 +32,14 @@ class MainActivityTest {
     @Test
     fun activity_AssertNotNull() {
         scenario.onActivity {
+            // TODO: Решение задания 2 и 3: пример использования e) assertNotNull;
             assertNotNull(it)
         }
     }
 
     @Test
     fun activity_IsResumed() {
+        // TODO: Решение задания 2 и 3: пример использования a) assertEquals;
         assertEquals(Lifecycle.State.RESUMED, scenario.state)
     }
 
