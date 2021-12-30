@@ -11,13 +11,13 @@ class QueryValidatorTest {
         assertTrue(QueryValidator.validate(VALID_QUERY))
     }
 
-    // Решение задания 1 - пример негативного тестирования
+    // TODO: Решение задания 1 - пример негативного тестирования
     @Test
     fun queryValidator_InvalidQueryEmpty_ReturnsFalse() {
         assertFalse(QueryValidator.validate(EMPTY_QUERY))
     }
 
-    // Решение задания 1 - пример негативного тестирования
+    // TODO: Решение задания 1 - пример негативного тестирования
     @Test
     fun queryValidator_InvalidQueryManyWords_ReturnsFalse() {
         assertFalse(QueryValidator.validate(MORE_THEN_ONE_WORD_QUERY))
