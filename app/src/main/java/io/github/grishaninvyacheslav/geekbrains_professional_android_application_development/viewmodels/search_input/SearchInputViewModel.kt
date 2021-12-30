@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.Screen
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.App
+import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.QueryValidator
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.domain.RouterStub
 import io.github.grishaninvyacheslav.geekbrains_professional_android_application_development.views.Screens
 
@@ -45,7 +46,7 @@ class SearchInputViewModel(
     private val liveData: LiveData<InputScreenState> = _liveData
 
     private fun validate(query: String) =
-        (!query.contains(" ") && query.isNotBlank()).also { isValid ->
+        (QueryValidator.validate(query)).also { isValid ->
             if (!isValid) {
                 if (query.contains(" ")) {
                     _liveData.value = InputScreenState.Error(Throwable("Запрос должен состоять тольо из одного слова"))
